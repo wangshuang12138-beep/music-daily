@@ -5,7 +5,7 @@ const STORY_BASE_URL = 'https://wangshuang12138-beep.github.io/story';
 const ASSETS_BASE_URL = 'https://wangshuang12138-beep.github.io/assets';
 
 // 缓存清除参数 - 每次更新时修改
-const CACHE_BUSTER = '?v=20250317-2';
+const CACHE_BUSTER = '?v=20250318-1';
 
 let storyData = null;
 let musicData = null;
@@ -65,7 +65,7 @@ async function loadStoryData() {
 
 // 加载音乐数据
 async function loadMusicData() {
-  const response = await fetch(`https://raw.githubusercontent.com/wangshuang12138-beep/music-daily/gh-pages/data.json${CACHE_BUSTER}`);
+  const response = await fetch(`https://raw.githubusercontent.com/wangshuang12138-beep/music-daily/main/data.json${CACHE_BUSTER}`);
   musicData = await response.json();
 }
 
