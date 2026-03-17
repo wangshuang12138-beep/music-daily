@@ -4,6 +4,9 @@
 const STORY_BASE_URL = 'https://wangshuang12138-beep.github.io/story';
 const ASSETS_BASE_URL = 'https://wangshuang12138-beep.github.io/assets';
 
+// 缓存清除参数 - 每次更新时修改
+const CACHE_BUSTER = '?v=20250317-2';
+
 let storyData = null;
 let musicData = null;
 let currentDay = 1;
@@ -41,11 +44,11 @@ async function init() {
 // 加载故事数据
 async function loadStoryData() {
   // 加载章节索引
-  const chaptersRes = await fetch(`${STORY_BASE_URL}/chapters.json`);
+  const chaptersRes = await fetch(`${STORY_BASE_URL}/chapters.json${CACHE_BUSTER}`);
   const chaptersData = await chaptersRes.json();
   
   // 加载完整故事
-  const storyRes = await fetch(`${STORY_BASE_URL}/story.md`);
+  const storyRes = await fetch(`${STORY_BASE_URL}/story.md${CACHE_BUSTER}`);
   const storyText = await storyRes.text();
   
   // 解析故事章节
@@ -62,7 +65,7 @@ async function loadStoryData() {
 
 // 加载音乐数据
 async function loadMusicData() {
-  const response = await fetch('data.json');
+  const response = await fetch(`data.json${CACHE_BUSTER}`);
   musicData = await response.json();
 }
 
