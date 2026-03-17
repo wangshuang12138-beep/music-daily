@@ -1,44 +1,151 @@
-# 🎵 xca's pick | 每日音乐推荐
+# xca's 音乐故事日记
 
-我的个人音乐推荐站，每天分享一首歌。
+一个人的日常，一首歌的时间。
 
 ## 🌐 在线访问
 
 **https://wangshuang12138-beep.github.io/music-daily/**
 
-## ✨ 功能
+## 📁 项目结构
 
-- 📅 **每日推荐** - 以日期为维度，每天一首精选音乐
-- 🏷 **标签筛选** - 支持按标签（晨间/电子/华语等）筛选历史推荐
-- 🎧 **沉浸播放** - 内嵌网易云播放器，支持外链跳转
-- 📱 **移动端适配** - 完美支持手机端浏览
-- 🎨 **沉浸式视觉** - 全屏专辑封面背景 + 毛玻璃效果
+```
+music-daily/          ← 每日展示仓库（本仓库）
+├── index.html        # 主页面
+├── app.js            # 加载逻辑
+├── data.json         # 每日歌曲信息
+└── README.md         # 本文件
 
-## 📝 如何添加每日推荐
+story/                ← 连载故事仓库
+├── story.md          # 完整故事（你编辑这个）
+├── chapters.json     # 章节索引
+└── README.md
 
-编辑 `data.json` 文件，按日期格式添加：
-
-```json
-{
-  "2026-03-16": {
-    "title": "歌曲名",
-    "artist": "歌手",
-    "album": "专辑名",
-    "cover": "专辑封面图URL",
-    "tags": ["晨间", "轻快", "华语"],
-    "neteaseId": "网易云歌曲ID",
-    "description": "推荐文案...",
-    "quote": "一句歌词金句"
-  }
-}
+assets/               ← 资源仓库
+├── music/            # MP3 音频文件
+│   ├── 2026-03-16.mp3
+│   └── ...
+└── logo-xca-square.svg
 ```
 
-## 🛠 技术栈
+## 📝 每日更新流程
 
-- 纯 HTML/CSS/JS
-- GitHub Pages 部署
-- 网易云音乐外链播放器
+### 第一步：写故事（story 仓库）
+
+1. 编辑 `story/story.md`，添加新的 Day：
+
+```markdown
+## Day 2
+
+今天的故事内容...
+
+可以写多段，段落之间空一行。
+
+留下一个悬念：那个蓝色的信封...
 
 ---
 
-*由 xca 精心推荐*
+## Day 3
+
+（待续）
+```
+
+2. 更新 `story/chapters.json`：
+
+```json
+{
+  "chapters": [
+    {
+      "day": 1,
+      "date": "2026-03-16",
+      "title": "起点",
+      "status": "published"
+    },
+    {
+      "day": 2,
+      "date": "2026-03-17",      
+      "title": "信封",
+      "status": "published"
+    }
+  ]
+}
+```
+
+3. 提交到 GitHub：
+
+```bash
+git add story.md chapters.json
+git commit -m "Add day 2 story"
+git push
+```
+
+### 第二步：上传音乐（assets 仓库）
+
+1. 将 MP3 文件命名为 `YYYY-MM-DD.mp3` 格式
+2. 上传到 `assets/music/` 目录：
+
+```bash
+# 本地操作示例
+cp ~/Downloads/song.mp3 assets/music/2026-03-17.mp3
+git add music/2026-03-17.mp3
+git commit -m "Add day 2 music"
+git push
+```
+
+### 第三步：更新歌曲信息（music-daily 仓库）
+
+编辑 `data.json`，添加新的一天：
+
+```json
+{
+  "days": [
+    {
+      "day": 1,
+      "date": "2026-03-16",
+      "song": {
+        "title": "想去海边",
+        "artist": "夏日入侵企画",
+        "quote": "等一个自然而然的晴天，我想要带你去海边"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-16.mp3"
+    },
+    {
+      "day": 2,
+      "date": "2026-03-17",
+      "song": {
+        "title": "歌名",
+        "artist": "歌手",
+        "quote": "一句金句歌词"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-17.mp3"
+    }
+  ]
+}
+```
+
+提交到 GitHub：
+
+```bash
+git add data.json
+git commit -m "Add day 2 music"
+git push
+```
+
+等待 2-3 分钟后，页面自动更新。
+
+## 🎨 设计说明
+
+- **书信/日记感**：米色背景、衬线字体、手写签名
+- **草书签名**：使用 Google Fonts 的 "Ma Shan Zheng" 字体
+- **Logo 位置**：日记卡片右下角，像印章一样
+- **音频存放**：统一放在 assets 仓库的 music/ 目录
+
+## 🛠 技术栈
+
+- 纯 HTML/CSS/JS，无框架
+- GitHub Pages 部署
+- 从 story 仓库动态加载 Markdown
+- 原生 HTML5 audio 播放器
+
+---
+
+*一个人的日常，一首歌的时间*
