@@ -65,7 +65,7 @@ async function loadStoryData() {
 
 // 加载音乐数据
 async function loadMusicData() {
-  const response = await fetch(`data.json${CACHE_BUSTER}`);
+  const response = await fetch(`https://raw.githubusercontent.com/wangshuang12138-beep/music-daily/gh-pages/data.json${CACHE_BUSTER}`);
   musicData = await response.json();
 }
 
