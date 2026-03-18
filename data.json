@@ -1,6 +1,6 @@
 {
-  "_updated": "2026-03-17T22:10:00+08:00",
-  "version": "1.1",
+  "_updated": "2026-03-18T08:00:00+08:00",
+  "version": "1.2",
   "days": [
     {
       "day": 1,
@@ -21,6 +21,16 @@
         "quote": "你离开我，就是旅行的意义"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-17.mp3"
+    },
+    {
+      "day": 3,
+      "date": "2026-03-18",
+      "song": {
+        "title": "云烟成雨",
+        "artist": "房东的猫",
+        "quote": "我多想再见你，哪怕匆匆一眼就别离"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-18.mp3"
     }
   ]
 }
