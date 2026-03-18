@@ -5,7 +5,7 @@ const STORY_BASE_URL = 'https://wangshuang12138-beep.github.io/story';
 const ASSETS_BASE_URL = 'https://wangshuang12138-beep.github.io/assets';
 
 // 缓存清除参数 - 每次更新时修改
-const CACHE_BUSTER = '?v=20250318-1';
+const CACHE_BUSTER = '?v=20250318-3';
 
 let storyData = null;
 let musicData = null;
