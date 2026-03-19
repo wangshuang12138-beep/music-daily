@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-03-18T08:00:00+08:00",
+  "_updated": "2026-03-19T08:13:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -31,6 +31,16 @@
         "quote": "我多想再见你，哪怕匆匆一眼就别离"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-18.mp3"
+    },
+    {
+      "day": 4,
+      "date": "2026-03-19",
+      "song": {
+        "title": "平凡之路",
+        "artist": "朴树",
+        "quote": "我曾经跨过山和大海，也穿过人山人海"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-19.mp3"
     }
   ]
 }
