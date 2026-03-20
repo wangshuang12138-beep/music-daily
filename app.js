@@ -5,12 +5,13 @@ const STORY_BASE_URL = 'https://wangshuang12138-beep.github.io/story';
 const ASSETS_BASE_URL = 'https://wangshuang12138-beep.github.io/assets';
 
 // 缓存清除参数 - 每次更新时修改
-const CACHE_BUSTER = '?v=20250320-2';
+const CACHE_BUSTER = '?v=20250320-3';
 
 let storyData = null;
 let musicData = null;
 let currentDay = 1;
 let maxDay = 1;
+let audioPlayer = null; // 全局音频对象，保持连续
 
 // 初始化
 async function init() {
@@ -113,31 +114,48 @@ function renderDay(day) {
   const dateStr = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
   const weekStr = ['日', '一', '二', '三', '四', '五', '六'][dateObj.getDay()];
   
-  // 音乐卡片移到上方，尝试自动播放
-  const musicHtml = music ? `
-  <div class="music-card" id="musicCard">
-    <div class="music-header">
-      <span>🎵</span>
-      <span>今日 soundtrack</span>
-    </div>
+  // 音乐卡片移到上方，使用全局音频对象
+  let musicHtml = '';
+  if (music) {
+    // 如果已有音频对象，更新 source；否则创建新的
+    if (!audioPlayer) {
+      audioPlayer = new Audio();
+      audioPlayer.volume = 0.3; // 默认音量30%
+    }
+    audioPlayer.src = music.audioUrl;
+    audioPlayer.loop = true;
     
-    <div class="song-info">
-      <div class="song-title">${escapeHtml(music.song.title)}</div>
-      <div class="song-artist">${escapeHtml(music.song.artist)}</div>
-    </div>
+    // 尝试播放（如果被阻止，用户需手动点击）
+    audioPlayer.play().catch(e => console.log('自动播放被阻止:', e));
     
-    <div class="audio-player">
-      <audio controls preload="auto" autoplay id="bgMusic">
-        <source src="${music.audioUrl}" type="audio/mpeg">
-        <p>您的浏览器不支持音频播放</p>
-      </audio>
+    musicHtml = `
+    <div class="music-card" id="musicCard">
+      <div class="music-header">
+        <span>🎵</span>
+        <span>今日 soundtrack</span>
+      </div>
+      
+      <div class="song-info">
+        <div class="song-title">${escapeHtml(music.song.title)}</div>
+        <div class="song-artist">${escapeHtml(music.song.artist)}</div>
+      </div>
+      
+      <div class="audio-player">
+        <audio controls preload="auto" autoplay id="bgMusic" src="${music.audioUrl}"></audio>
+      </div>
+      
+      <blockquote class="quote">
+        ${escapeHtml(music.song.quote)}
+      </blockquote>
     </div>
-    
-    <blockquote class="quote">
-      ${escapeHtml(music.song.quote)}
-    </blockquote>
-  </div>
-  ` : '';
+    `;
+  } else {
+    // 没有音乐时停止播放
+    if (audioPlayer) {
+      audioPlayer.pause();
+      audioPlayer.src = '';
+    }
+  }
   
   container.innerHTML = musicHtml + `
     <article class="diary-card">
@@ -158,14 +176,6 @@ function renderDay(day) {
       </footer>
     </article>
   `;
-  
-  // 尝试自动播放（可能被浏览器阻止）
-  setTimeout(() => {
-    const audio = document.getElementById('bgMusic');
-    if (audio) {
-      audio.play().catch(e => console.log('自动播放被阻止:', e));
-    }
-  }, 100);
   
   updateNav();
 }
