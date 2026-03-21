@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-03-20T08:13:00+08:00",
+  "_updated": "2026-03-21T08:30:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -51,6 +51,16 @@
         "quote": "她们都老了吧，她们在哪里呀，我们就这样各自奔天涯"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-20.mp3"
+    },
+    {
+      "day": 6,
+      "date": "2026-03-21",
+      "song": {
+        "title": "好久不见",
+        "artist": "陈奕迅",
+        "quote": "我来到你的城市，走过你来时的路"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-21.mp3"
     }
   ]
 }
