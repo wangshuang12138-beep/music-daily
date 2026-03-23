@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-03-22T08:13:00+08:00",
+  "_updated": "2026-03-23T08:13:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -71,6 +71,16 @@
         "quote": "过了很久终于我愿抬头看，你就在对岸走得好慢"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-22.mp3"
+    },
+    {
+      "day": 8,
+      "date": "2026-03-23",
+      "song": {
+        "title": "从前慢",
+        "artist": "刘胡轶",
+        "quote": "从前的日色变得慢，车，马，邮件都慢，一生只够爱一个人"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-23.mp3"
     }
   ]
 }
