@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-03-23T08:13:00+08:00",
+  "_updated": "2026-03-24T09:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -81,6 +81,16 @@
         "quote": "从前的日色变得慢，车，马，邮件都慢，一生只够爱一个人"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-23.mp3"
+    },
+    {
+      "day": 9,
+      "date": "2026-03-24",
+      "song": {
+        "title": "平凡的一天",
+        "artist": "毛不易",
+        "quote": "这是最平凡的一天啊，你也想念吗，不追不赶慢慢走回家"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-24.mp3"
     }
   ]
 }
