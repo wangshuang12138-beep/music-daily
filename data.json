@@ -91,6 +91,16 @@
         "quote": "这是最平凡的一天啊，你也想念吗，不追不赶慢慢走回家"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-24.mp3"
+    },
+    {
+      "day": 10,
+      "date": "2026-03-25",
+      "song": {
+        "title": "成都",
+        "artist": "赵雷",
+        "quote": "和我在成都的街头走一走，直到所有的灯都熄灭了也不停留"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-25.mp3"
     }
   ]
 }
