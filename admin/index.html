@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Daily - 管理后台</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: #2c2c2c;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 { font-size: 18px; font-weight: 500; }
+    .header .logout {
+      color: #999;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .header .logout:hover { color: white; }
+    .container {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+    .tab {
+      padding: 8px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 14px;
+      color: #666;
+    }
+    .tab.active {
+      background: #2c2c2c;
+      color: white;
+    }
+    .tab:hover:not(.active) { background: #e0e0e0; }
+    
+    .panel { display: none; }
+    .panel.active { display: block; }
+    
+    .day-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .day-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .day-card:hover {
+      border-color: #2c2c2c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .day-card .day-num { font-size: 24px; font-weight: bold; color: #2c2c2c; }
+    .day-card .day-date { font-size: 12px; color: #999; margin-top: 5px; }
+    .day-card .day-status {
+      font-size: 11px;
+      margin-top: 8px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    .day-status.published { background: #e8f5e9; color: #2e7d32; }
+    .day-status.draft { background: #fff3e0; color: #ef6c00; }
+    
+    .editor {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 30px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .form-group textarea {
+      min-height: 300px;
+      resize: vertical;
+      line-height: 1.8;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #2c2c2c;
+      color: white;
+    }
+    .btn-primary:hover { background: #444; }
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #666;
+      margin-left: 10px;
+    }
+    .btn-secondary:hover { background: #e0e0e0; }
+    
+    .message {
+      padding: 12px 20px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .message.success { background: #e8f5e9; color: #2e7d32; display: block; }
+    .message.error { background: #ffebee; color: #c62828; display: block; }
+    
+    /* 登录页面 */
+    .login-container {
+      max-width: 400px;
+      margin: 100px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c2c2c;
+    }
+    .login-container .form-group {
+      margin-bottom: 20px;
+    }
+    .login-container input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .login-container .btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 登录页面 -->
+  <div id="loginPage" class="login-container">
+    <h2>🔐 Music Daily 管理后台</h2>
+    <div class="form-group">
+      <input type="text" id="username" placeholder="用户名" value="admin">
+    </div>
+    <div class="form-group">
+      <input type="password" id="password" placeholder="密码">
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">登录</button>
+    <div id="loginError" style="color: #c62828; margin-top: 15px; text-align: center; display: none;">
+      用户名或密码错误
+    </div>
+  </div>
+
+  <!-- 管理页面 -->
+  <div id="adminPage" style="display: none;">
+    <div class="header">
+      <h1>Music Daily 管理后台</h1>
+      <span class="logout" onclick="doLogout()">退出登录</span>
+    </div>
+    <div class="container">
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('days')">📅 日记管理</div>
+        <div class="tab" onclick="switchTab('music')">🎵 音乐管理</div>
+      </div>
+      
+      <div id="message" class="message"></div>
+      
+      <!-- 日记管理面板 -->
+      <div id="daysPanel" class="panel active">
+        <div id="dayList" class="day-list"></div>
+        <div id="dayEditor" class="editor" style="display: none;">
+          <h3 style="margin-bottom: 20px;">编辑 Day <span id="editDayNum"></span></h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>日期</label>
+              <input type="date" id="editDate">
+            </div>
+            <div class="form-group">
+              <label>标题</label>
+              <input type="text" id="editTitle" placeholder="日记标题">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>故事内容 (Markdown)</label>
+            <textarea id="editContent" placeholder="在这里写入故事内容..."></textarea>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-primary" onclick="saveDay()">💾 保存</button>
+            <button class="btn btn-secondary" onclick="cancelEdit()">取消</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 音乐管理面板 -->
+      <div id="musicPanel" class="panel">
+        <div id="musicEditor" class="editor">
+          <h3 style="margin-bottom: 20px;">音乐配置 - Day <span id="musicDayNum">1</span></h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>歌曲名称</label>
+              <input type="text" id="musicTitle" placeholder="歌曲名称">
+            </div>
+            <div class="form-group">
+              <label>歌手</label>
+              <input type="text" id="musicArtist" placeholder="歌手名称">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Quote / 歌词</label>
+            <input type="text" id="musicQuote" placeholder="一句歌词或引言">
+          </div>
+          <div class="form-group">
+            <label>音频文件 URL</label>
+            <input type="text" id="musicUrl" placeholder="https://.../music.mp3">
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-primary" onclick="saveMusic()">💾 保存音乐配置</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
