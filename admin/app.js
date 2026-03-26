@@ -1,5 +1,7 @@
 // app.js - 管理后台逻辑
 
+console.log('[App] 脚本加载中...');
+
 // 配置
 const REPO_OWNER = 'wangshuang12138-beep';
 const REPO_NAME = 'music-daily';
@@ -13,111 +15,37 @@ let currentData = {
 
 let currentEditDay = null;
 
-// 切换标签页
-function switchTab(tab) {
+// 全局暴露函数
+window.switchTab = function(tab) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   
-  event.target.classList.add('active');
+  const tabs = document.querySelectorAll('.tab');
+  if (tab === 'days') tabs[0]?.classList.add('active');
+  if (tab === 'music') tabs[1]?.classList.add('active');
+  
   document.getElementById(tab + 'Panel').classList.add('active');
   
   if (tab === 'music' && currentEditDay) {
     loadMusicForDay(currentEditDay);
   }
-}
+};
 
-// 加载数据
-async function loadData() {
-  try {
-    // 加载章节列表
-    const chaptersRes = await fetch(`https://${REPO_OWNER}.github.io/${STORY_REPO}/chapters.json`);
-    const chaptersData = await chaptersRes.json();
-    currentData.chapters = chaptersData.chapters;
-    
-    // 加载音乐数据
-    const musicRes = await fetch(`https://${REPO_OWNER}.github.io/${REPO_NAME}/data.json`);
-    const musicData = await musicRes.json();
-    currentData.music = musicData.days || [];
-    
-    renderDayList();
-  } catch (e) {
-    showMessage('加载数据失败: ' + e.message, 'error');
-  }
-}
-
-// 渲染日记列表
-function renderDayList() {
-  const container = document.getElementById('dayList');
-  const maxDay = Math.max(...currentData.chapters.map(c => c.day), 0);
-  
-  let html = '';
-  
-  // 显示已有章节
-  for (let i = 1; i <= Math.max(maxDay, 11); i++) {
-    const chapter = currentData.chapters.find(c => c.day === i);
-    const music = currentData.music.find(m => m.day === i);
-    
-    const date = chapter?.date || calculateDate(i);
-    const status = chapter ? 'published' : 'draft';
-    const statusText = chapter ? '已发布' : '草稿';
-    const title = chapter?.title || `Day ${i}`;
-    
-    html += `
-      <div class="day-card" onclick="editDay(${i})">
-        <div class="day-num">${i}</div>
-        <div class="day-date">${date}</div>
-        <div class="day-status ${status}">${statusText}</div>
-        ${music ? '<div style="margin-top:5px;font-size:11px;color:#666;">🎵 ' + music.song?.title + '</div>' : ''}
-      </div>
-    `;
-  }
-  
-  // 添加新日记按钮
-  html += `
-    <div class="day-card" onclick="createNewDay()" style="border-style: dashed;">
-      <div class="day-num" style="color: #999;">+</div>
-      <div class="day-date">新建日记</div>
-    </div>
-  `;
-  
-  container.innerHTML = html;
-}
-
-// 计算日期
-function calculateDate(dayNum) {
-  // Day 1 = 2026-03-16
-  const baseDate = new Date('2026-03-16');
-  const targetDate = new Date(baseDate);
-  targetDate.setDate(baseDate.getDate() + dayNum - 1);
-  return targetDate.toISOString().split('T')[0];
-}
-
-// 编辑日记
-async function editDay(day) {
+window.editDay = function(day) {
+  console.log('[App] 编辑 Day', day);
   currentEditDay = day;
   
   const chapter = currentData.chapters.find(c => c.day === day);
   const music = currentData.music.find(m => m.day === day);
   
-  // 显示编辑器
   document.getElementById('dayList').style.display = 'none';
   document.getElementById('dayEditor').style.display = 'block';
   
   document.getElementById('editDayNum').textContent = day;
   document.getElementById('editDate').value = chapter?.date || calculateDate(day);
   document.getElementById('editTitle').value = chapter?.title || '';
+  document.getElementById('editContent').value = generateDayTemplate(day);
   
-  // 加载故事内容
-  try {
-    const storyRes = await fetch(`https://${REPO_OWNER}.github.io/${STORY_REPO}/story.md`);
-    const storyText = await storyRes.text();
-    const dayContent = extractDayContent(storyText, day);
-    document.getElementById('editContent').value = dayContent || generateDayTemplate(day);
-  } catch (e) {
-    document.getElementById('editContent').value = generateDayTemplate(day);
-  }
-  
-  // 同步更新音乐编辑器
   document.getElementById('musicDayNum').textContent = day;
   if (music) {
     document.getElementById('musicTitle').value = music.song?.title || '';
@@ -128,31 +56,135 @@ async function editDay(day) {
     document.getElementById('musicTitle').value = '';
     document.getElementById('musicArtist').value = '';
     document.getElementById('musicQuote').value = '';
-    document.getElementById('musicUrl').value = `https://${REPO_OWNER}.github.io/assets/music/${calculateDate(day).replace(/-/g, '-')}.mp3`;
+    document.getElementById('musicUrl').value = `https://${REPO_OWNER}.github.io/assets/music/${calculateDate(day)}.mp3`;
   }
-}
+};
 
-// 创建新日记
-function createNewDay() {
+window.createNewDay = function() {
   const maxDay = Math.max(...currentData.chapters.map(c => c.day), 0);
-  editDay(maxDay + 1);
-}
+  window.editDay(maxDay + 1);
+};
 
-// 取消编辑
-function cancelEdit() {
+window.cancelEdit = function() {
   document.getElementById('dayList').style.display = 'grid';
   document.getElementById('dayEditor').style.display = 'none';
   currentEditDay = null;
+};
+
+window.saveDay = function() {
+  if (!currentEditDay) return;
+  
+  const date = document.getElementById('editDate').value;
+  const title = document.getElementById('editTitle').value.trim();
+  const content = document.getElementById('editContent').value.trim();
+  
+  if (!date || !title || !content) {
+    showMessage('请填写完整信息', 'error');
+    return;
+  }
+  
+  const dayData = {
+    day: currentEditDay,
+    date,
+    title,
+    content
+  };
+  
+  showExportDialog(dayData, 'story');
+};
+
+window.saveMusic = function() {
+  if (!currentEditDay) return;
+  
+  const musicData = {
+    day: currentEditDay,
+    date: calculateDate(currentEditDay),
+    song: {
+      title: document.getElementById('musicTitle').value.trim(),
+      artist: document.getElementById('musicArtist').value.trim(),
+      quote: document.getElementById('musicQuote').value.trim()
+    },
+    audioUrl: document.getElementById('musicUrl').value.trim()
+  };
+  
+  showExportDialog(musicData, 'music');
+};
+
+window.copyToClipboard = function(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    showMessage('已复制到剪贴板', 'success');
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    showMessage('已复制到剪贴板', 'success');
+  });
+};
+
+// 内部函数
+async function loadData() {
+  console.log('[App] 加载数据中...');
+  try {
+    const chaptersRes = await fetch(`https://${REPO_OWNER}.github.io/${STORY_REPO}/chapters.json`);
+    const chaptersData = await chaptersRes.json();
+    currentData.chapters = chaptersData.chapters || [];
+    
+    const musicRes = await fetch(`https://${REPO_OWNER}.github.io/${REPO_NAME}/data.json`);
+    const musicData = await musicRes.json();
+    currentData.music = musicData.days || [];
+    
+    renderDayList();
+    console.log('[App] 数据加载完成');
+  } catch (e) {
+    console.error('[App] 加载数据失败:', e);
+    showMessage('加载数据失败: ' + e.message, 'error');
+  }
 }
 
-// 提取某一天的内容
-function extractDayContent(storyText, day) {
-  const regex = new RegExp(`## Day ${day}\\s*\\n([\\s\\S]*?)(?=\\n## Day \\d+|\\n---|$)`);
-  const match = storyText.match(regex);
-  return match ? match[1].trim() : '';
+function renderDayList() {
+  const container = document.getElementById('dayList');
+  const maxDay = Math.max(...currentData.chapters.map(c => c.day), 0);
+  
+  let html = '';
+  
+  for (let i = 1; i <= Math.max(maxDay, 11); i++) {
+    const chapter = currentData.chapters.find(c => c.day === i);
+    const music = currentData.music.find(m => m.day === i);
+    
+    const date = chapter?.date || calculateDate(i);
+    const status = chapter ? 'published' : 'draft';
+    const statusText = chapter ? '已发布' : '草稿';
+    
+    html += `
+      <div class="day-card" onclick="editDay(${i})">
+        <div class="day-num">${i}</div>
+        <div class="day-date">${date}</div>
+        <div class="day-status ${status}">${statusText}</div>
+        ${music ? '<div style="margin-top:5px;font-size:11px;color:#666;">🎵 ' + (music.song?.title || '') + '</div>' : ''}
+      </div>
+    `;
+  }
+  
+  html += `
+    <div class="day-card" onclick="createNewDay()" style="border-style: dashed;">
+      <div class="day-num" style="color: #999;">+</div>
+      <div class="day-date">新建日记</div>
+    </div>
+  `;
+  
+  container.innerHTML = html;
 }
 
-// 生成日记模板
+function calculateDate(dayNum) {
+  const baseDate = new Date('2026-03-16');
+  const targetDate = new Date(baseDate);
+  targetDate.setDate(baseDate.getDate() + dayNum - 1);
+  return targetDate.toISOString().split('T')[0];
+}
+
 function generateDayTemplate(day) {
   const date = calculateDate(day);
   return `## Day ${day}
@@ -171,51 +203,7 @@ ${date}，星期__，深圳，__，__度。
 `;
 }
 
-// 保存日记
-async function saveDay() {
-  if (!currentEditDay) return;
-  
-  const date = document.getElementById('editDate').value;
-  const title = document.getElementById('editTitle').value.trim();
-  const content = document.getElementById('editContent').value.trim();
-  
-  if (!date || !title || !content) {
-    showMessage('请填写完整信息', 'error');
-    return;
-  }
-  
-  // 生成需要更新的文件内容
-  const dayData = {
-    day: currentEditDay,
-    date,
-    title,
-    content
-  };
-  
-  // 显示导出窗口（因为无法直接写 GitHub，先展示 JSON）
-  showExportDialog(dayData);
-}
-
-// 保存音乐配置
-async function saveMusic() {
-  if (!currentEditDay) return;
-  
-  const musicData = {
-    day: currentEditDay,
-    date: calculateDate(currentEditDay),
-    song: {
-      title: document.getElementById('musicTitle').value.trim(),
-      artist: document.getElementById('musicArtist').value.trim(),
-      quote: document.getElementById('musicQuote').value.trim()
-    },
-    audioUrl: document.getElementById('musicUrl').value.trim()
-  };
-  
-  showExportDialog(musicData, 'music');
-}
-
-// 显示导出对话框
-function showExportDialog(data, type = 'story') {
+function showExportDialog(data, type) {
   const json = JSON.stringify(data, null, 2);
   
   const dialog = document.createElement('div');
@@ -228,6 +216,8 @@ function showExportDialog(data, type = 'story') {
     justify-content: center;
     z-index: 1000;
   `;
+  
+  const escapedJson = json.replace(/'/g, "\\'").replace(/"/g, '&quot;');
   
   dialog.innerHTML = `
     <div style="
@@ -244,7 +234,7 @@ function showExportDialog(data, type = 'story') {
         由于浏览器安全限制，无法直接修改代码仓库。
         请复制以下 JSON 数据，然后手动更新到对应文件：
       </p>
-      <pre style="
+      <pre id="exportJson" style="
         background: #f5f5f5;
         padding: 15px;
         border-radius: 4px;
@@ -253,29 +243,24 @@ function showExportDialog(data, type = 'story') {
         margin: 15px 0;
       ">${json.replace(/</g, '&lt;')}</pre>
       <div style="margin-top: 20px;">
-        <button class="btn btn-primary" onclick="copyToClipboard('${json.replace(/'/g, "\\'")}')">📋 复制 JSON</button>
+        <button class="btn btn-primary" onclick="doCopy()">📋 复制 JSON</button>
         <button class="btn btn-secondary" onclick="this.closest('.dialog').remove()">关闭</button>
       </div>
-      <p style="color: #999; font-size: 12px; margin-top: 15px;">
-        💡 提示：后续可以配置 GitHub Token 来自动提交
-      </p>
     </div>
   `;
   
   dialog.className = 'dialog';
   document.body.appendChild(dialog);
+  
+  window.doCopy = function() {
+    const text = document.getElementById('exportJson').textContent;
+    window.copyToClipboard(text);
+  };
 }
 
-// 复制到剪贴板
-function copyToClipboard(text) {
-  navigator.clipboard.writeText(text).then(() => {
-    showMessage('已复制到剪贴板', 'success');
-  });
-}
-
-// 显示消息
 function showMessage(text, type) {
   const msg = document.getElementById('message');
+  if (!msg) return;
   msg.textContent = text;
   msg.className = 'message ' + type;
   
@@ -284,7 +269,6 @@ function showMessage(text, type) {
   }, 3000);
 }
 
-// 加载某天的音乐
 function loadMusicForDay(day) {
   const music = currentData.music.find(m => m.day === day);
   document.getElementById('musicDayNum').textContent = day;
@@ -296,3 +280,8 @@ function loadMusicForDay(day) {
     document.getElementById('musicUrl').value = music.audioUrl || '';
   }
 }
+
+// 暴露 loadData 给 auth.js
+window.loadData = loadData;
+
+console.log('[App] 脚本加载完成');

@@ -1,6 +1,8 @@
 // auth.js - 认证模块
 // 注意：这是纯前端方案，仅用于演示，不适合生产环境
 
+console.log('[Auth] 脚本加载中...');
+
 // 简单的混淆（base64 + 反转）
 const ENCODED_CREDS = {
   // btoa('admin') -> 'YWRtaW4=' -> 反转 -> '=4nimdRAY'
@@ -17,19 +19,41 @@ function encode(str) {
 }
 
 function decode(encoded) {
-  return atob(encoded.split('').reverse().join(''));
+  try {
+    return atob(encoded.split('').reverse().join(''));
+  } catch (e) {
+    console.error('[Auth] 解码失败:', e);
+    return '';
+  }
 }
 
-function doLogin() {
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value;
+// 全局暴露 doLogin
+window.doLogin = function() {
+  console.log('[Auth] 登录按钮被点击');
+  
+  const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
   const errorDiv = document.getElementById('loginError');
+  
+  if (!usernameInput || !passwordInput) {
+    console.error('[Auth] 找不到输入框');
+    alert('页面加载错误，请刷新重试');
+    return;
+  }
+  
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value;
+  
+  console.log('[Auth] 用户名:', username);
   
   // 验证
   const validUser = decode(ENCODED_CREDS.username);
   const validPass = decode(ENCODED_CREDS.password);
   
+  console.log('[Auth] 验证中...');
+  
   if (username === validUser && password === validPass) {
+    console.log('[Auth] 登录成功');
     // 登录成功，存储 session
     const session = {
       user: username,
@@ -42,14 +66,17 @@ function doLogin() {
     showAdminPage();
     errorDiv.style.display = 'none';
   } else {
+    console.log('[Auth] 登录失败');
     errorDiv.style.display = 'block';
   }
-}
+};
 
-function doLogout() {
+// 全局暴露 doLogout
+window.doLogout = function() {
+  console.log('[Auth] 退出登录');
   localStorage.removeItem(AUTH_KEY);
   showLoginPage();
-}
+};
 
 function checkAuth() {
   const sessionStr = localStorage.getItem(AUTH_KEY);
@@ -68,13 +95,21 @@ function checkAuth() {
 }
 
 function showLoginPage() {
-  document.getElementById('loginPage').style.display = 'block';
-  document.getElementById('adminPage').style.display = 'none';
+  console.log('[Auth] 显示登录页');
+  const loginPage = document.getElementById('loginPage');
+  const adminPage = document.getElementById('adminPage');
+  
+  if (loginPage) loginPage.style.display = 'block';
+  if (adminPage) adminPage.style.display = 'none';
 }
 
 function showAdminPage() {
-  document.getElementById('loginPage').style.display = 'none';
-  document.getElementById('adminPage').style.display = 'block';
+  console.log('[Auth] 显示管理页');
+  const loginPage = document.getElementById('loginPage');
+  const adminPage = document.getElementById('adminPage');
+  
+  if (loginPage) loginPage.style.display = 'none';
+  if (adminPage) adminPage.style.display = 'block';
   
   // 加载数据
   if (typeof loadData === 'function') {
@@ -83,15 +118,25 @@ function showAdminPage() {
 }
 
 // 页面加载时检查
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('[Auth] DOM 加载完成');
+  
+  // 绑定回车登录
+  const passwordInput = document.getElementById('password');
+  if (passwordInput) {
+    passwordInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        window.doLogin();
+      }
+    });
+  }
+  
+  // 检查登录状态
   if (checkAuth()) {
     showAdminPage();
   } else {
     showLoginPage();
   }
-  
-  // 回车登录
-  document.getElementById('password')?.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') doLogin();
-  });
 });
+
+console.log('[Auth] 脚本加载完成');
