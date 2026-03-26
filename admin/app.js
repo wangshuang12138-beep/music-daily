@@ -48,17 +48,33 @@ window.editDay = async function(day) {
   // 从 GitHub 获取真实的故事内容
   let storyContent = '';
   try {
-    const storyRes = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${STORY_REPO}/main/story.md`);
+    const storyUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${STORY_REPO}/main/story.md`;
+    console.log('[App] 正在获取:', storyUrl);
+    
+    const storyRes = await fetch(storyUrl);
+    console.log('[App] 响应状态:', storyRes.status);
+    
     if (storyRes.ok) {
       const storyText = await storyRes.text();
+      console.log('[App] 获取到故事内容长度:', storyText.length);
+      
       storyContent = extractDayContent(storyText, day);
+      console.log('[App] 提取到 Day', day, '内容长度:', storyContent.length);
+      
+      if (!storyContent) {
+        console.log('[App] 未找到 Day', day, '的内容，使用模板');
+      }
+    } else {
+      console.error('[App] 获取故事失败:', storyRes.status, storyRes.statusText);
     }
   } catch (e) {
-    console.log('[App] 获取故事内容失败:', e);
+    console.error('[App] 获取故事内容失败:', e);
   }
   
   // 如果有真实内容则显示，否则显示模板
-  document.getElementById('editContent').value = storyContent || generateDayTemplate(day);
+  const finalContent = storyContent || generateDayTemplate(day);
+  document.getElementById('editContent').value = finalContent;
+  console.log('[App] 编辑器内容已设置，长度:', finalContent.length);
   
   document.getElementById('musicDayNum').textContent = day;
   if (music) {
@@ -223,7 +239,6 @@ function extractDayContent(storyText, day) {
   const regex = new RegExp(`## Day ${day}\\s*\\n([\\s\\S]*?)(?=\\n## Day \\d+|\\n---\\s*$|$)`);
   const match = storyText.match(regex);
   return match ? match[1].trim() : '';
-}
 }
 
 function showExportDialog(data, type) {
