@@ -1,33 +1,29 @@
 // auth.js - 认证模块
-// 注意：这是纯前端方案，仅用于演示，不适合生产环境
 
 console.log('[Auth] 脚本加载中...');
 
-// 简单的混淆（base64 + 反转）
-const ENCODED_CREDS = {
-  // btoa('admin') -> 'YWRtaW4=' -> 反转 -> '=4nimdRAY'
-  username: '=4nimdRAY',
-  // btoa('admin123') -> 'YWRtaW4xMjM=' -> 反转 -> '=MzIxNmltZGFZ'
-  password: '=MzIxNmltZGFZ'
-};
+// 硬编码凭证（简单 base64 编码，仅用于演示）
+const VALID_USERNAME = 'admin';
+const VALID_PASSWORD = 'admin123';
 
 const AUTH_KEY = 'md_admin_auth';
-const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24小时
+const SESSION_DURATION = 24 * 60 * 60 * 1000;
 
-function encode(str) {
-  return btoa(str).split('').reverse().join('');
-}
-
-function decode(encoded) {
-  try {
-    return atob(encoded.split('').reverse().join(''));
-  } catch (e) {
-    console.error('[Auth] 解码失败:', e);
-    return '';
+// 显示/隐藏密码
+window.togglePassword = function() {
+  const pwdInput = document.getElementById('password');
+  const toggleBtn = document.getElementById('togglePwd');
+  
+  if (pwdInput.type === 'password') {
+    pwdInput.type = 'text';
+    toggleBtn.textContent = '🙈';
+  } else {
+    pwdInput.type = 'password';
+    toggleBtn.textContent = '👁️';
   }
-}
+};
 
-// 全局暴露 doLogin
+// 登录
 window.doLogin = function() {
   console.log('[Auth] 登录按钮被点击');
   
@@ -37,24 +33,18 @@ window.doLogin = function() {
   
   if (!usernameInput || !passwordInput) {
     console.error('[Auth] 找不到输入框');
-    alert('页面加载错误，请刷新重试');
     return;
   }
   
   const username = usernameInput.value.trim();
   const password = passwordInput.value;
   
-  console.log('[Auth] 用户名:', username);
+  console.log('[Auth] 验证中... 用户名:', username);
   
-  // 验证
-  const validUser = decode(ENCODED_CREDS.username);
-  const validPass = decode(ENCODED_CREDS.password);
-  
-  console.log('[Auth] 验证中...');
-  
-  if (username === validUser && password === validPass) {
-    console.log('[Auth] 登录成功');
-    // 登录成功，存储 session
+  if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+    console.log('[Auth] 登录成功！');
+    
+    // 存储 session
     const session = {
       user: username,
       loginAt: Date.now(),
@@ -62,22 +52,25 @@ window.doLogin = function() {
     };
     localStorage.setItem(AUTH_KEY, JSON.stringify(session));
     
-    // 跳转
-    showAdminPage();
+    // 隐藏错误
     errorDiv.style.display = 'none';
+    
+    // 切换页面
+    window.showAdminPage();
   } else {
     console.log('[Auth] 登录失败');
     errorDiv.style.display = 'block';
   }
 };
 
-// 全局暴露 doLogout
+// 退出
 window.doLogout = function() {
   console.log('[Auth] 退出登录');
   localStorage.removeItem(AUTH_KEY);
-  showLoginPage();
+  window.showLoginPage();
 };
 
+// 检查登录状态
 function checkAuth() {
   const sessionStr = localStorage.getItem(AUTH_KEY);
   if (!sessionStr) return false;
@@ -94,16 +87,18 @@ function checkAuth() {
   }
 }
 
-function showLoginPage() {
+// 显示登录页
+window.showLoginPage = function() {
   console.log('[Auth] 显示登录页');
   const loginPage = document.getElementById('loginPage');
   const adminPage = document.getElementById('adminPage');
   
   if (loginPage) loginPage.style.display = 'block';
   if (adminPage) adminPage.style.display = 'none';
-}
+};
 
-function showAdminPage() {
+// 显示管理页
+window.showAdminPage = function() {
   console.log('[Auth] 显示管理页');
   const loginPage = document.getElementById('loginPage');
   const adminPage = document.getElementById('adminPage');
@@ -112,14 +107,20 @@ function showAdminPage() {
   if (adminPage) adminPage.style.display = 'block';
   
   // 加载数据
-  if (typeof loadData === 'function') {
-    loadData();
+  if (typeof window.loadData === 'function') {
+    window.loadData();
   }
+};
+
+// 页面加载时
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
 }
 
-// 页面加载时检查
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('[Auth] DOM 加载完成');
+function init() {
+  console.log('[Auth] 初始化...');
   
   // 绑定回车登录
   const passwordInput = document.getElementById('password');
@@ -133,10 +134,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 检查登录状态
   if (checkAuth()) {
-    showAdminPage();
+    window.showAdminPage();
   } else {
-    showLoginPage();
+    window.showLoginPage();
   }
-});
+}
 
 console.log('[Auth] 脚本加载完成');
