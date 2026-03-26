@@ -307,4 +307,169 @@ function loadMusicForDay(day) {
 // 暴露 loadData 给 auth.js
 window.loadData = loadData;
 
+// 文件上传相关变量
+let selectedFile = null;
+let fileBase64 = null;
+
+// 处理文件选择
+window.handleFileSelect = function(event) {
+  const file = event.target.files[0];
+  if (file) processFile(file);
+};
+
+// 处理拖拽
+window.handleDrop = function(event) {
+  event.preventDefault();
+  const file = event.dataTransfer.files[0];
+  if (file) processFile(file);
+};
+
+// 处理文件
+function processFile(file) {
+  if (!file.type.startsWith('audio/') && !file.name.endsWith('.mp3')) {
+    alert('请选择音频文件（MP3格式）');
+    return;
+  }
+  
+  selectedFile = file;
+  
+  // 显示文件信息
+  document.getElementById('fileName').textContent = file.name;
+  document.getElementById('fileSize').textContent = formatFileSize(file.size);
+  document.getElementById('fileInfo').style.display = 'block';
+  
+  // 读取为 base64
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    fileBase64 = e.target.result.split(',')[1]; // 去掉 data:audio/mp3;base64, 前缀
+    
+    // 设置音频预览
+    document.getElementById('audioPreview').src = e.target.result;
+    
+    // 尝试获取音频时长
+    const audio = new Audio(e.target.result);
+    audio.onloadedmetadata = function() {
+      const duration = formatDuration(audio.duration);
+      document.getElementById('fileDuration').textContent = '时长: ' + duration;
+    };
+  };
+  reader.readAsDataURL(file);
+}
+
+// 清除文件
+window.clearFile = function() {
+  selectedFile = null;
+  fileBase64 = null;
+  document.getElementById('fileInput').value = '';
+  document.getElementById('fileInfo').style.display = 'none';
+  document.getElementById('audioPreview').src = '';
+};
+
+// 生成上传数据
+window.generateUploadData = function() {
+  if (!selectedFile || !fileBase64) {
+    alert('请先选择文件');
+    return;
+  }
+  
+  if (!currentEditDay) {
+    alert('请先选择要上传的 Day');
+    return;
+  }
+  
+  const date = calculateDate(currentEditDay);
+  const filename = `${date}.mp3`;
+  
+  const uploadData = {
+    filename: filename,
+    day: currentEditDay,
+    date: date,
+    size: selectedFile.size,
+    base64: fileBase64.substring(0, 100) + '... (共 ' + fileBase64.length + ' 字符)'
+  };
+  
+  // 显示上传指引对话框
+  showUploadDialog(filename, fileBase64);
+};
+
+// 显示上传对话框
+function showUploadDialog(filename, base64Content) {
+  const dialog = document.createElement('div');
+  dialog.style.cssText = `
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  `;
+  
+  const date = calculateDate(currentEditDay);
+  const githubUrl = `https://github.com/${REPO_OWNER}/assets/upload/main/music/`;
+  
+  dialog.innerHTML = `
+    <div style="
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow: auto;
+    ">
+      <h3>🎵 音乐文件上传指引</h3>
+      
+      <div style="background: #e3f2fd; padding: 15px; border-radius: 4px; margin: 15px 0; font-size: 14px;">
+        <strong>目标文件名：</strong> ${filename}<br>
+        <strong>对应 Day：</strong> Day ${currentEditDay} (${date})<br>
+        <strong>文件大小：</strong> ${formatFileSize(selectedFile.size)}
+      </div>
+      
+      <p style="color: #666; font-size: 14px; margin: 15px 0;">
+        由于浏览器安全限制，无法直接上传到 GitHub。请按以下步骤操作：
+      </p>
+      
+      <ol style="color: #666; font-size: 14px; line-height: 2;">
+        <li>点击下方「打开 GitHub 上传页面」</li>
+        <li>文件名填写：<code>${filename}</code></li>
+        <li>将本地文件拖拽到页面，或点击选择文件</li>
+        <li>填写提交信息，如：「Add Day ${currentEditDay} music」</li>
+        <li>点击「Commit changes」</li>
+      </ol>
+      
+      <div style="margin-top: 20px;">
+        <a href="${githubUrl}" target="_blank" class="btn btn-primary" style="text-decoration: none; display: inline-block;">
+          🔗 打开 GitHub 上传页面
+        </a>
+        <button class="btn btn-secondary" onclick="this.closest('.dialog').remove()">关闭</button>
+      </div>
+      
+      <div style="margin-top: 15px; padding: 10px; background: #fff3e0; border-radius: 4px; font-size: 12px; color: #e65100;">
+        💡 提示：上传完成后，音乐文件的 URL 将自动变为：<br>
+        <code>https://${REPO_OWNER}.github.io/assets/music/${filename}</code>
+      </div>
+    </div>
+  `;
+  
+  dialog.className = 'dialog';
+  document.body.appendChild(dialog);
+}
+
+// 格式化文件大小
+function formatFileSize(bytes) {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+// 格式化时长
+function formatDuration(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return mins + ':' + secs.toString().padStart(2, '0');
+}
+
 console.log('[App] 脚本加载完成');
