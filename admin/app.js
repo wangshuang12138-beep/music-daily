@@ -45,10 +45,17 @@ window.editDay = async function(day) {
   document.getElementById('editDate').value = chapter?.date || calculateDate(day);
   document.getElementById('editTitle').value = chapter?.title || '';
   
+  // 显示加载状态
+  const contentTextarea = document.getElementById('editContent');
+  contentTextarea.value = '正在从 GitHub 获取故事内容...';
+  
   // 从 GitHub 获取真实的故事内容
   let storyContent = '';
+  let errorMsg = '';
+  
   try {
-    const storyUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${STORY_REPO}/main/story.md`;
+    // 尝试从 GitHub Pages 获取（避免 CORS 问题）
+    const storyUrl = `https://${REPO_OWNER}.github.io/${STORY_REPO}/story.md`;
     console.log('[App] 正在获取:', storyUrl);
     
     const storyRes = await fetch(storyUrl);
@@ -57,24 +64,28 @@ window.editDay = async function(day) {
     if (storyRes.ok) {
       const storyText = await storyRes.text();
       console.log('[App] 获取到故事内容长度:', storyText.length);
+      console.log('[App] 前200字符:', storyText.substring(0, 200));
       
       storyContent = extractDayContent(storyText, day);
-      console.log('[App] 提取到 Day', day, '内容长度:', storyContent.length);
-      
-      if (!storyContent) {
-        console.log('[App] 未找到 Day', day, '的内容，使用模板');
-      }
+      console.log('[App] 提取结果:', storyContent ? `成功 (${storyContent.length} 字符)` : '未找到');
     } else {
-      console.error('[App] 获取故事失败:', storyRes.status, storyRes.statusText);
+      errorMsg = `获取失败: ${storyRes.status} ${storyRes.statusText}`;
+      console.error('[App]', errorMsg);
     }
   } catch (e) {
-    console.error('[App] 获取故事内容失败:', e);
+    errorMsg = `错误: ${e.message}`;
+    console.error('[App] 异常:', e);
   }
   
   // 如果有真实内容则显示，否则显示模板
-  const finalContent = storyContent || generateDayTemplate(day);
-  document.getElementById('editContent').value = finalContent;
-  console.log('[App] 编辑器内容已设置，长度:', finalContent.length);
+  if (storyContent) {
+    contentTextarea.value = storyContent;
+  } else {
+    contentTextarea.value = generateDayTemplate(day);
+    if (errorMsg) {
+      alert('获取故事内容失败:\n' + errorMsg + '\n\n已显示模板内容，请手动编辑。');
+    }
+  }
   
   document.getElementById('musicDayNum').textContent = day;
   if (music) {
@@ -235,10 +246,50 @@ ${date}，星期__，深圳，__，__度。
 
 // 从 story.md 中提取某天的内容
 function extractDayContent(storyText, day) {
-  // 匹配 ## Day X 开头的内容，直到下一个 ## Day 或文件结束
-  const regex = new RegExp(`## Day ${day}\\s*\\n([\\s\\S]*?)(?=\\n## Day \\d+|\\n---\\s*$|$)`);
-  const match = storyText.match(regex);
-  return match ? match[1].trim() : '';
+  console.log(`[App] 正在提取 Day ${day} 的内容...`);
+  console.log('[App] 原文总长度:', storyText.length);
+  
+  // 查找 ## Day X 的位置
+  const dayHeader = `## Day ${day}`;
+  const dayIndex = storyText.indexOf(dayHeader);
+  
+  if (dayIndex === -1) {
+    console.log(`[App] 未找到 "${dayHeader}"`);
+    return '';
+  }
+  
+  console.log(`[App] 找到 "${dayHeader}" 在位置`, dayIndex);
+  
+  // 从 ## Day X 之后开始
+  const contentStart = dayIndex + dayHeader.length;
+  const remainingText = storyText.substring(contentStart);
+  
+  // 查找下一个 ## Day 或 --- 分隔线
+  const nextDayMatch = remainingText.match(/\n## Day \d+/);
+  const nextSeparatorMatch = remainingText.match(/\n---\s*\n/);
+  
+  let contentEnd = remainingText.length;
+  
+  if (nextDayMatch) {
+    contentEnd = nextDayMatch.index;
+    console.log('[App] 找到下一个 Day，内容结束于', contentEnd);
+  } else if (nextSeparatorMatch) {
+    contentEnd = nextSeparatorMatch.index;
+    console.log('[App] 找到分隔线 ---，内容结束于', contentEnd);
+  } else {
+    console.log('[App] 未找到结束标记，取到文件末尾');
+  }
+  
+  // 提取内容并清理
+  let content = remainingText.substring(0, contentEnd).trim();
+  
+  // 去掉开头可能的换行
+  content = content.replace(/^\n+/, '');
+  
+  console.log(`[App] 提取完成，内容长度:`, content.length);
+  console.log('[App] 内容前100字符:', content.substring(0, 100));
+  
+  return content;
 }
 
 function showExportDialog(data, type) {
