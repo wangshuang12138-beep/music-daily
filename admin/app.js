@@ -31,7 +31,7 @@ window.switchTab = function(tab) {
   }
 };
 
-window.editDay = function(day) {
+window.editDay = async function(day) {
   console.log('[App] 编辑 Day', day);
   currentEditDay = day;
   
@@ -44,7 +44,21 @@ window.editDay = function(day) {
   document.getElementById('editDayNum').textContent = day;
   document.getElementById('editDate').value = chapter?.date || calculateDate(day);
   document.getElementById('editTitle').value = chapter?.title || '';
-  document.getElementById('editContent').value = generateDayTemplate(day);
+  
+  // 从 GitHub 获取真实的故事内容
+  let storyContent = '';
+  try {
+    const storyRes = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${STORY_REPO}/main/story.md`);
+    if (storyRes.ok) {
+      const storyText = await storyRes.text();
+      storyContent = extractDayContent(storyText, day);
+    }
+  } catch (e) {
+    console.log('[App] 获取故事内容失败:', e);
+  }
+  
+  // 如果有真实内容则显示，否则显示模板
+  document.getElementById('editContent').value = storyContent || generateDayTemplate(day);
   
   document.getElementById('musicDayNum').textContent = day;
   if (music) {
@@ -201,6 +215,15 @@ ${date}，星期__，深圳，__，__度。
 
 裸辞的第__天，我在______听了一首歌。
 `;
+}
+
+// 从 story.md 中提取某天的内容
+function extractDayContent(storyText, day) {
+  // 匹配 ## Day X 开头的内容，直到下一个 ## Day 或文件结束
+  const regex = new RegExp(`## Day ${day}\\s*\\n([\\s\\S]*?)(?=\\n## Day \\d+|\\n---\\s*$|$)`);
+  const match = storyText.match(regex);
+  return match ? match[1].trim() : '';
+}
 }
 
 function showExportDialog(data, type) {
