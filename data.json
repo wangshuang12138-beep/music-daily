@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-03-24T09:17:00+08:00",
+  "_updated": "2026-04-16T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -111,6 +111,16 @@
         "quote": "就老去吧，孤独别醒来，你渴望的离开，只是无处停摆"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-03-26.mp3"
+    },
+    {
+      "day": 32,
+      "date": "2026-04-16",
+      "song": {
+        "title": "山丘",
+        "artist": "李宗盛",
+        "quote": "越过山丘，才发现无人等候"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-04-16.mp3"
     }
   ]
 }
