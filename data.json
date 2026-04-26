@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-04-16T08:17:00+08:00",
+  "_updated": "2026-04-26T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -131,6 +131,26 @@
         "quote": "我不怕千万人阻挡，只怕自己投降"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-04-22.mp3"
+    },
+    {
+      "day": 40,
+      "date": "2026-04-24",
+      "song": {
+        "title": "夜空中最亮的星",
+        "artist": "逃跑计划",
+        "quote": "每当我找不到存在的意义，每当我迷失在黑夜里，夜空中最亮的星，请照亮我前行"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-04-24.mp3"
+    },
+    {
+      "day": 41,
+      "date": "2026-04-25",
+      "song": {
+        "title": "红豆",
+        "artist": "王菲",
+        "quote": "等到风景都看透，也许你会陪我看细水长流"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-04-25.mp3"
     }
   ]
 }
