@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-04-26T08:17:00+08:00",
+  "_updated": "2026-04-27T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -151,6 +151,16 @@
         "quote": "等到风景都看透，也许你会陪我看细水长流"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-04-25.mp3"
+    },
+    {
+      "day": 42,
+      "date": "2026-04-27",
+      "song": {
+        "title": "陪你度过漫长岁月",
+        "artist": "陈奕迅",
+        "quote": "一次次失去又重来，我没离开，陪伴是最长情的告白"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-04-27.mp3"
     }
   ]
 }
