@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-04-29T08:17:00+08:00",
+  "_updated": "2026-04-30T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -171,6 +171,16 @@
         "quote": "会不会有一天，时间真的能倒退，退回你的我的回不去的悠悠的岁月"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-04-29.mp3"
+    },
+    {
+      "day": 44,
+      "date": "2026-04-30",
+      "song": {
+        "title": "曾经的你",
+        "artist": "许巍",
+        "quote": "曾梦想仗剑走天涯，看一看世界的繁华"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-04-30.mp3"
     }
   ]
 }
