@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-04-30T08:17:00+08:00",
+  "_updated": "2026-05-01T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -181,6 +181,16 @@
         "quote": "曾梦想仗剑走天涯，看一看世界的繁华"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-04-30.mp3"
+    },
+    {
+      "day": 45,
+      "date": "2026-05-01",
+      "song": {
+        "title": "光阴的故事",
+        "artist": "罗大佑",
+        "quote": "流水它带走光阴的故事改变了我们"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-01.mp3"
     }
   ]
 }
