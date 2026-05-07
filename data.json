@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-05-01T08:17:00+08:00",
+  "_updated": "2026-05-07T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -191,6 +191,66 @@
         "quote": "流水它带走光阴的故事改变了我们"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-01.mp3"
+    },
+    {
+      "day": 46,
+      "date": "2026-05-02",
+      "song": {
+        "title": "宝贝",
+        "artist": "张悬",
+        "quote": "我的宝贝宝贝，给你一点甜甜，让你今夜都好眠"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-02.mp3"
+    },
+    {
+      "day": 47,
+      "date": "2026-05-03",
+      "song": {
+        "title": "小情歌",
+        "artist": "苏打绿",
+        "quote": "这是一首简单的小情歌，唱着人们心肠的曲折"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-03.mp3"
+    },
+    {
+      "day": 48,
+      "date": "2026-05-04",
+      "song": {
+        "title": "同桌的你",
+        "artist": "老狼",
+        "quote": "明天你是否会想起，昨天你写的日记"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-04.mp3"
+    },
+    {
+      "day": 49,
+      "date": "2026-05-05",
+      "song": {
+        "title": "被遗忘的时光",
+        "artist": "蔡琴",
+        "quote": "是谁在敲打我窗，是谁在撩动琴弦"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-05.mp3"
+    },
+    {
+      "day": 50,
+      "date": "2026-05-06",
+      "song": {
+        "title": "光年之外",
+        "artist": "邓紫棋",
+        "quote": "缘分让我们相遇乱世以外，命运却要我们危难中相爱"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-06.mp3"
+    },
+    {
+      "day": 51,
+      "date": "2026-05-07",
+      "song": {
+        "title": "稻香",
+        "artist": "周杰伦",
+        "quote": "还记得你说家是唯一的城堡，随着稻香河流继续奔跑"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-07.mp3"
     }
   ]
 }
