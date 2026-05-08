@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-05-07T08:17:00+08:00",
+  "_updated": "2026-05-08T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -251,6 +251,16 @@
         "quote": "还记得你说家是唯一的城堡，随着稻香河流继续奔跑"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-07.mp3"
+    },
+    {
+      "day": 52,
+      "date": "2026-05-08",
+      "song": {
+        "title": "消愁",
+        "artist": "毛不易",
+        "quote": "一杯敬朝阳，一杯敬月光，唤醒我的向往，温柔了寒窗"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-08.mp3"
     }
   ]
 }
