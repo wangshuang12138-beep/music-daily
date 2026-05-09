@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-05-08T08:17:00+08:00",
+  "_updated": "2026-05-09T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -261,6 +261,16 @@
         "quote": "一杯敬朝阳，一杯敬月光，唤醒我的向往，温柔了寒窗"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-08.mp3"
+    }
+    {
+      "day": 53,
+      "date": "2026-05-09",
+      "song": {
+        "title": "岁月神偷",
+        "artist": "金玟岐",
+        "quote": "岁月是一场有去无回的旅行，好的坏的都是风景"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-09.mp3"
     }
   ]
 }
