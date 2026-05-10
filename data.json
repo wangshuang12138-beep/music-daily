@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-05-09T08:17:00+08:00",
+  "_updated": "2026-05-10T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -271,6 +271,26 @@
         "quote": "岁月是一场有去无回的旅行，好的坏的都是风景"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-09.mp3"
+    }
+    {
+      "day": 54,
+      "date": "2026-05-10",
+      "song": {
+        "title": "遇见",
+        "artist": "孙燕姿",
+        "quote": "我遇见谁，会有怎样的对白，我等的人，他在多远的未来"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-10.mp3"
+    }
+    {
+      "day": 54,
+      "date": "2026-05-10",
+      "song": {
+        "title": "遇见",
+        "artist": "孙燕姿",
+        "quote": "我遇见谁，会有怎样的对白，我等的人，他在多远的未来"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-10.mp3"
     }
   ]
 }
