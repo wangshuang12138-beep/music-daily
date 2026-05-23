@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-05-10T08:17:00+08:00",
+  "_updated": "2026-05-23T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -291,6 +291,126 @@
         "quote": "我可以跟在你身后，像影子追着光梦游"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-11.mp3"
+    },
+    {
+      "day": 56,
+      "date": "2026-05-12",
+      "song": {
+        "title": "十年",
+        "artist": "陈奕迅",
+        "quote": "十年之前，我不认识你，你不属于我，我们还是一样陪在一个陌生人左右"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-12.mp3"
+    },
+    {
+      "day": 57,
+      "date": "2026-05-13",
+      "song": {
+        "title": "小幸运",
+        "artist": "田馥甄",
+        "quote": "原来你是我最想留住的幸运，原来我们和爱情曾经靠得那么近"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-13.mp3"
+    },
+    {
+      "day": 58,
+      "date": "2026-05-14",
+      "song": {
+        "title": "说谎",
+        "artist": "林宥嘉",
+        "quote": "我没有说谎，我何必说谎，你懂我的，我对你从来就不会假装"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-14.mp3"
+    },
+    {
+      "day": 59,
+      "date": "2026-05-15",
+      "song": {
+        "title": "唯一",
+        "artist": "告五人",
+        "quote": "你真的懂唯一的定义，并不简单如呼吸"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-15.mp3"
+    },
+    {
+      "day": 60,
+      "date": "2026-05-16",
+      "song": {
+        "title": "慢慢喜欢你",
+        "artist": "莫文蔚",
+        "quote": "慢慢喜欢你，慢慢的亲密，慢慢聊自己，慢慢和你走在一起"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-16.mp3"
+    },
+    {
+      "day": 61,
+      "date": "2026-05-17",
+      "song": {
+        "title": "年少有为",
+        "artist": "李荣浩",
+        "quote": "假如我年少有为不自卑，懂得什么是珍贵"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-17.mp3"
+    },
+    {
+      "day": 62,
+      "date": "2026-05-18",
+      "song": {
+        "title": "南方姑娘",
+        "artist": "赵雷",
+        "quote": "北方的村庄住着一个南方的姑娘，她总是喜欢穿着带花的裙子站在路旁"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-18.mp3"
+    },
+    {
+      "day": 63,
+      "date": "2026-05-19",
+      "song": {
+        "title": "我",
+        "artist": "张国荣",
+        "quote": "我就是我，是颜色不一样的烟火"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-19.mp3"
+    },
+    {
+      "day": 64,
+      "date": "2026-05-20",
+      "song": {
+        "title": "当你老了",
+        "artist": "赵照",
+        "quote": "当你老了，头发白了，睡意昏沉"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-20.mp3"
+    },
+    {
+      "day": 65,
+      "date": "2026-05-21",
+      "song": {
+        "title": "拥抱",
+        "artist": "五月天",
+        "quote": "脱下长日的假面，奔向梦幻的疆界"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-21.mp3"
+    },
+    {
+      "day": 66,
+      "date": "2026-05-22",
+      "song": {
+        "title": "鱼",
+        "artist": "陈绮贞",
+        "quote": "带不走的留不下的，我全都交付他"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-22.mp3"
+    },
+    {
+      "day": 67,
+      "date": "2026-05-23",
+      "song": {
+        "title": "风吹麦浪",
+        "artist": "李健",
+        "quote": "远处蔚蓝天空下，涌动着金色的麦浪"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-23.mp3"
     }
   ]
 }
