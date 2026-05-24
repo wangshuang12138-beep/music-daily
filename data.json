@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-05-23T08:17:00+08:00",
+  "_updated": "2026-05-24T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -403,14 +403,14 @@
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-22.mp3"
     },
     {
-      "day": 67,
-      "date": "2026-05-23",
+      "day": 68,
+      "date": "2026-05-24",
       "song": {
-        "title": "风吹麦浪",
-        "artist": "李健",
-        "quote": "远处蔚蓝天空下，涌动着金色的麦浪"
+        "title": "理想三旬",
+        "artist": "陈鸿宇",
+        "quote": "雨后有车驶来，驶过暮色苍白"
       },
-      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-23.mp3"
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-24.mp3"
     }
   ]
 }
