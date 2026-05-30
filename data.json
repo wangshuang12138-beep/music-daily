@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-05-24T08:17:00+08:00",
+  "_updated": "2026-05-30T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -411,6 +411,66 @@
         "quote": "雨后有车驶来，驶过暮色苍白"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-24.mp3"
+    },
+    {
+      "day": 69,
+      "date": "2026-05-25",
+      "song": {
+        "title": "盛夏的果实",
+        "artist": "莫文蔚",
+        "quote": "也许放弃，才能靠近你；不再见你，你才会把我记起"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-25.mp3"
+    },
+    {
+      "day": 70,
+      "date": "2026-05-26",
+      "song": {
+        "title": "揪心的玩笑与漫长的白日梦",
+        "artist": "万能青年旅店",
+        "quote": "是谁来自山川湖海，却囿于昼夜厨房与爱"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-26.mp3"
+    },
+    {
+      "day": 71,
+      "date": "2026-05-27",
+      "song": {
+        "title": "晚风",
+        "artist": "陈婧霏",
+        "quote": "晚风轻轻飘荡，心事都不去想"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-27.mp3"
+    },
+    {
+      "day": 72,
+      "date": "2026-05-28",
+      "song": {
+        "title": "安河桥",
+        "artist": "宋冬野",
+        "quote": "让我再看你一遍，从南到北"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-28.mp3"
+    },
+    {
+      "day": 73,
+      "date": "2026-05-29",
+      "song": {
+        "title": "春风十里",
+        "artist": "鹿先森乐队",
+        "quote": "我说所有的酒，都不如你"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-29.mp3"
+    },
+    {
+      "day": 74,
+      "date": "2026-05-30",
+      "song": {
+        "title": "水星记",
+        "artist": "郭顶",
+        "quote": "还要多远才能进入你的心，还要多久才能和你接近"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-30.mp3"
     }
   ]
 }
