@@ -403,8 +403,15 @@
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-22.mp3"
     },
     {
-      "day": 68,
-      "date": "2026-05-24",
+      "day": 67,
+      "date": "2026-05-23",
+      "song": {
+        "title": "风吹麦浪",
+        "artist": "李健",
+        "quote": "远处蔚蓝天空下，涌动着金色的麦浪"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-05-23.mp3"
+    },
       "song": {
         "title": "理想三旬",
         "artist": "陈鸿宇",
@@ -561,6 +568,16 @@
         "quote": "从前从前，有个人爱你很久，但偏偏，风渐渐，把距离吹得好远"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-06-10.mp3"
+    },
+    {
+      "day": 83,
+      "date": "2026-06-08",
+      "song": {
+        "title": "像我这样的人",
+        "artist": "毛不易",
+        "quote": "像我这样迷茫的人，像我这样寻找的人，像我这样碌碌无为的人，你还见过多少人"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-06-08.mp3"
     },
     {
       "day": 84,
