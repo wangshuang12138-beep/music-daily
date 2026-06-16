@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-05-30T08:17:00+08:00",
+  "_updated": "2026-06-16T08:17:00+08:00",
   "version": "1.2",
   "days": [
     {
@@ -608,6 +608,46 @@
         "quote": "最美的不是下雨天，是曾与你躲过雨的屋檐"
       },
       "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-06-12.mp3"
+    },
+    {
+      "day": 88,
+      "date": "2026-06-13",
+      "song": {
+        "title": "稳稳的幸福",
+        "artist": "陈奕迅",
+        "quote": "我要稳稳的幸福，能抵挡末日的残酷，在不安的深夜，能有个归宿"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-06-13.mp3"
+    },
+    {
+      "day": 89,
+      "date": "2026-06-14",
+      "song": {
+        "title": "温柔",
+        "artist": "五月天",
+        "quote": "走在风中，今天阳光，突然好温柔，天的温柔，地的温柔，像你抱着我"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-06-14.mp3"
+    },
+    {
+      "day": 90,
+      "date": "2026-06-15",
+      "song": {
+        "title": "给自己的歌",
+        "artist": "李宗盛",
+        "quote": "想得却不可得，你奈人生何，该舍的舍不得，只顾着跟往事瞎扯"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-06-15.mp3"
+    },
+    {
+      "day": 91,
+      "date": "2026-06-16",
+      "song": {
+        "title": "我记得",
+        "artist": "赵雷",
+        "quote": "时空是个圆圈，直行或是转弯，我们最终都会相见"
+      },
+      "audioUrl": "https://wangshuang12138-beep.github.io/assets/music/2026-06-16.mp3"
     }
   ]
 }
